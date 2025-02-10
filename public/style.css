@@ -1,0 +1,101 @@
+/* General Page Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Form Styling */
+form {
+    background: white;
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 25px 45px 25px 25px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+    color: #333;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+/* Input Focus */
+input:focus {
+    border-color: #667eea;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(102, 126, 234, 0.5);
+}
+
+/* Submit Button */
+button {
+    width: 50%;
+    background: violet;
+    color: white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    
+}
+
+button:hover {
+    background: #764ba2;
+    color: white;
+    
+}
+
+/* Table Styling */
+table {
+    width: 85%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background: #2d3748;
+    color: white;
+    font-size: 18px;
+}
+
+td {
+    color: #333;
+    font-size: 16px;
+}
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: -10px;
+    display: block;
+}
+
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    form {
+        width: 90%;
+    }
+
+    table {
+        width: 100%;
+    }
+}
