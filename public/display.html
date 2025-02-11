@@ -28,7 +28,7 @@
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: "https://user-registertion.onrender.com",
+                url: "https://user-registertion.onrender.com/api/users",
                 success: function (data) {
                     let rows = "";
                     data.forEach(user => {

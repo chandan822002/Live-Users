@@ -55,43 +55,43 @@
           let loginId = $("#loginId").val().trim();
           let password = $("#password").val().trim();
 
-          // ✅ First Name Validation
+          // First Name Validation
           if (firstName === "") {
             $("#firstNameError").text("First Name is required");
             isValid = false;
           }
 
-          // ✅ Last Name Validation
+          // Last Name Validation
           if (lastName === "") {
             $("#lastNameError").text("Last Name is required");
             isValid = false;
           }
 
-          // ✅ Mobile Number Validation (10 digits)
+          // Mobile Number Validation (10 digits)
           if (!/^\d{10}$/.test(mobile)) {
             $("#mobileError").text("Enter a valid 10-digit mobile number");
             isValid = false;
           }
 
-          // ✅ Email Validation
+          // Email Validation
           if (!/^\S+@\S+\.\S+$/.test(email)) {
             $("#emailError").text("Enter a valid email address");
             isValid = false;
           }
 
-          // ✅ Login ID Validation (Between 8 to 12 characters)
+          // Login ID Validation (Between 8 to 12 characters)
           if (!/^\w{8,12}$/.test(loginId)) {
             $("#loginIdError").text("Login ID must be between 8-12 characters");
             isValid = false;
           }
 
-          // ✅ Password Validation (Minimum 6 characters)
+          // Password Validation (Minimum 6 characters)
           if (password.length < 6) {
             $("#passwordError").text("Password must be at least 6 characters");
             isValid = false;
           }
 
-          // ✅ If No Errors, Submit Data
+          // If No Errors, Submit Data
           if (isValid) {
             let userData = {
               firstName: firstName,
@@ -104,7 +104,7 @@
 
             $.ajax({
               type: "POST",
-              url: "https://user-registertion.onrender.com",
+              url: "https://user-registertion.onrender.com/api/users",
               data: JSON.stringify(userData),
               contentType: "application/json",
               success: function () {

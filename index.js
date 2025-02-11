@@ -9,12 +9,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // ✅ MongoDB Connection
-
-mongoose.connect("mongodb+srv://admin:Jatoliya@11@cluster0.mongodb.net/userdata?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log("MongoDB Connected to Atlas"))
+mongoose.connect("mongodb://127.0.0.1:27017/userdata")
+    .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log("DB Connection Error:", err));
 
 // ✅ Static Files Serve (index.html, CSS, JS)
