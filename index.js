@@ -9,7 +9,6 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // ✅ MongoDB Connection
-const mongoose = require("mongoose");
 
 mongoose.connect("mongodb+srv://admin:Jatoliya@11@cluster0.mongodb.net/userdata?retryWrites=true&w=majority", {
     useNewUrlParser: true,
