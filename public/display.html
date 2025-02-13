@@ -1,51 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Users List</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Registered Users</h2>
     <table border="1">
-        <thead>
-            <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Mobile</th>
-                <th>Email</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Country</th>
-            </tr>
-        </thead>
-        <tbody id="userTable"></tbody>
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>Country</th>
+          <th>State</th>
+          <th>City</th>
+        </tr>
+      </thead>
+      <tbody id="userTable"></tbody>
     </table>
 
     <script>
-        $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: "https://user-registertion.onrender.com/api/users",
-                success: function (data) {
-                    let rows = "";
-                    data.forEach(user => {
-                        rows += `<tr>
+      $(document).ready(function () {
+        $.ajax({
+          type: "GET",
+          url: "http://localhost:3000/api/users",
+          success: function (data) {
+            let rows = "";
+            data.forEach((user) => {
+              let address = user.address || {};
+              let city = address.city || "N/A";
+              let state = address.state || "N/A";
+              let country = address.country || "N/A";
+
+              rows += `<tr>
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
                             <td>${user.mobile}</td>
                             <td>${user.email}</td>
-                            <td>${user.address.city}</td>
-                            <td>${user.address.state}</td>
-                            <td>${user.address.country}</td>
+                            <td>${country}</td>
+                            <td>${state}</td>
+                            <td>${city}</td>
+                            
+                            
+                            
                         </tr>`;
-                    });
-                    $("#userTable").html(rows);
-                }
             });
+            $("#userTable").html(rows);
+          },
+          error: function (xhr, status, error) {
+            console.log("Error fetching data:", error);
+            alert("Error loading data. Check console for details.");
+          },
         });
+      });
     </script>
-</body>
+  </body>
 </html>

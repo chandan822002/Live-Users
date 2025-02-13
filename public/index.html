@@ -21,17 +21,25 @@
 
       <input type="email" id="email" placeholder="Email" />
       <span class="error" id="emailError"></span>
+      
 
-      <input type="text" id="country" placeholder="Country" /> 
-      <span class="error" id="mobileError"></span>
+      <input type="text" id="country" placeholder="Country" />
+      <span class="gap"></span>
+
       <input type="text" id="state" placeholder="State" />
-      <span class="error" id="mobileError"></span>
-      <input type="text" id="city" placeholder="City" />
-      <span class="error" id="mobileError"></span> 
-      <input type="text" id="street" placeholder="Street" />
-      <span class="error" id="mobileError"></span>
+      <span class="gap"></span>
 
-      <input type="text" id="loginId" placeholder="Login ID (8-12 characters)" />
+      <input type="text" id="city" placeholder="City" />
+      <span class="gap"></span>
+
+      <input type="text" id="street" placeholder="Street" />
+      <span class="gap"></span>
+
+      <input
+        type="text"
+        id="loginId"
+        placeholder="Login ID (8-12 characters)"
+      />
       <span class="error" id="loginIdError"></span>
 
       <input type="password" id="password" placeholder="Password" />
@@ -42,86 +50,121 @@
     </form>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      $(document).ready(function () {
-        $("#userForm").submit(function (event) {
-          event.preventDefault();
-          $(".error").text(""); // Pichle errors clear karo
-          let isValid = true;
-
-          let firstName = $("#firstName").val().trim();
-          let lastName = $("#lastName").val().trim();
-          let mobile = $("#mobile").val().trim();
-          let email = $("#email").val().trim();
-          let loginId = $("#loginId").val().trim();
-          let password = $("#password").val().trim();
-
-          // First Name Validation
-          if (firstName === "") {
-            $("#firstNameError").text("First Name is required");
-            isValid = false;
-          }
-
-          // Last Name Validation
-          if (lastName === "") {
-            $("#lastNameError").text("Last Name is required");
-            isValid = false;
-          }
-
-          // Mobile Number Validation (10 digits)
-          if (!/^\d{10}$/.test(mobile)) {
-            $("#mobileError").text("Enter a valid 10-digit mobile number");
-            isValid = false;
-          }
-
-          // Email Validation
-          if (!/^\S+@\S+\.\S+$/.test(email)) {
-            $("#emailError").text("Enter a valid email address");
-            isValid = false;
-          }
-
-          // Login ID Validation (Between 8 to 12 characters)
-          if (!/^\w{8,12}$/.test(loginId)) {
-            $("#loginIdError").text("Login ID must be between 8-12 characters");
-            isValid = false;
-          }
-
-          // Password Validation (Minimum 6 characters)
-          if (password.length < 6) {
-            $("#passwordError").text("Password must be at least 6 characters");
-            isValid = false;
-          }
-
-          // If No Errors, Submit Data
-          if (isValid) {
-            let userData = {
-              firstName: firstName,
-              lastName: lastName,
-              mobile: mobile,
-              email: email,
-              loginId: loginId,
-              password: password,
-            };
-
-            $.ajax({
-              type: "POST",
-              url: "https://user-registertion.onrender.com/api/users",
-              data: JSON.stringify(userData),
-              contentType: "application/json",
-              success: function () {
-                alert("User data saved successfully!");
-                $("#userForm")[0].reset();
-              },
-              error: function (xhr) {
-                console.error("Error:", xhr.responseText);
-                alert("Data save Faild!");
-              },
+        $(document).ready(function () {
+            $("#userForm").submit(function (event) {
+                event.preventDefault();
+                $(".error").text(""); // Clear previous errors
+                let isValid = true;
+    
+                let firstName = $("#firstName").val().trim();
+                let lastName = $("#lastName").val().trim();
+                let mobile = $("#mobile").val().trim();
+                let email = $("#email").val().trim();
+                let loginId = $("#loginId").val().trim();
+                let password = $("#password").val().trim();
+    
+                let country = $("#country").val().trim();
+                let state = $("#state").val().trim();
+                let city = $("#city").val().trim();
+                let street = $("#street").val().trim();
+    
+                // First Name Validation
+                if (firstName === "") {
+                    $("#firstNameError").text("First Name is required!");
+                    isValid = false;
+                }
+    
+                // Last Name Validation
+                if (lastName === "") {
+                    $("#lastNameError").text("Last Name is required!");
+                    isValid = false;
+                }
+    
+                // Mobile Number Validation )
+                if (!/^\d{10}$/.test(mobile)) {
+                    $("#mobileError").text("Enter a valid 10-digit mobile number!");
+                    isValid = false;
+                }
+    
+                // Email Validation
+                if (!/^\S+@\S+\.\S+$/.test(email)) {
+                    $("#emailError").text("Enter a valid email address!");
+                    isValid = false;
+                }
+    
+                // Login ID Validation 
+                if (!/^\w{8,12}$/.test(loginId)) {
+                    $("#loginIdError").text("Login ID must be 8-12 characters long!");
+                    isValid = false;
+                }
+    
+                // Password Validation 
+                if (password.length < 6) {
+                    $("#passwordError").text("Password must be at least 6 characters!");
+                    isValid = false;
+                }
+    
+                // Address Validation
+                if (street === "") {
+                    $("#streetError").text("Street is required!");
+                    isValid = false;
+                }
+                if (city === "") {
+                    $("#cityError").text("City is required!");
+                    isValid = false;
+                }
+                if (state === "") {
+                    $("#stateError").text("State is required!");
+                    isValid = false;
+                }
+                if (country === "") {
+                    $("#countryError").text("Country is required!");
+                    isValid = false;
+                }
+    
+                // If No Errors, Submit Data
+                if (isValid) {
+                    let userData = {
+                        firstName: firstName,
+                        lastName: lastName,
+                        mobile: mobile,
+                        email: email,
+                        address: {  
+                            street: street,
+                            city: city,
+                            state: state,
+                            country: country
+                        },
+                        loginId: loginId,
+                        password: password
+                    };
+    
+                    console.log("🚀 Sending user data:", userData);  // Debugging
+    
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:3000/api/users",
+                        data: JSON.stringify(userData),
+                        contentType: "application/json",
+                        success: function () {
+                            alert("✅ User data saved successfully!");
+                            $("#userForm")[0].reset();
+                            $(".error").text(""); // Clear errors after successful save
+                        },
+                        error: function (xhr) {
+                            console.error("Error:", xhr.responseText);
+                            alert("Data save Failed! Check console.");
+                        },
+                    });
+                }
             });
-          }
+    
+            $("#showDataButton").click(function () {
+                window.location.href = "display.html"; // Redirect to display.html
+            });
         });
-      });
-      $("#showDataButton").click(function () {
-        window.location.href = "display.html"; // Redirect to display.html
-      });
     </script>
+    
+    
   </body>
 </html>
