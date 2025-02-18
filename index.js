@@ -9,13 +9,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB Connection
-mongoose
-  .connect("mongodb+srv://jatoliyabrijesh:Jatoliya1611@cluster0.3qxib.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log("DB Connection Error:", err));
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb+srv://jatoliyabrijesh:Jatoliya1611@cluster0.3qxib.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+    .then(() => console.log("MongoDB Connected Successfully"))
+    .catch((err) => console.error("MongoDB Connection Error:", err));
 
 // Static Files Serve
 app.use(express.static(path.join(__dirname, "public")));
