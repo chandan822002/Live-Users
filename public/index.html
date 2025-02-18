@@ -139,15 +139,15 @@
                         password: password
                     };
     
-                    console.log("🚀 Sending user data:", userData);  // Debugging
+                    console.log("Sending user data:", userData);  // Debugging
                     
                     $.ajax({
                         type: "POST",
-                        url:"http://localhost:10000/api/users",
+                        url:"http://localhost:3000/api/users",
                         data: JSON.stringify(userData),
                         contentType: "application/json",
                         success: function () {
-                            alert("✅ User data saved successfully!");
+                            alert("User data saved successfully!");
                             $("#userForm")[0].reset();
                             $(".error").text(""); // Clear errors after successful save
                         },
