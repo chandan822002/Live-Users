@@ -1,17 +1,21 @@
 const express = require("express");
-
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
+const http = require("http"); // Import HTTP module to integrate with socket.io
+const socketIo = require("socket.io"); // Import socket.io
 
 const app = express();
+const server = http.createServer(app); // Create an HTTP server
+const io = socketIo(server); // Pass the server to socket.io
+
 app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB Connection
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://jatoliyabrijesh:Jatoliya1611@cluster0.3qxib.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("mongodb+srv://chandankumarsingh1345:s1PQVeKlPusi1kaf@cluster0user.0z5dq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0User")
     .then(() => console.log("MongoDB Connected Successfully"))
     .catch((err) => console.error("MongoDB Connection Error:", err));
 
@@ -28,7 +32,7 @@ app.get("/users", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "display.html"));
 });
 
-//Fixed Mongoose Schema
+// Fixed Mongoose Schema
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
@@ -56,6 +60,9 @@ app.post("/api/users", async (req, res) => {
     const user = new User(req.body);
     await user.save();
     res.status(201).send(user);
+
+    // Emit an event to notify clients about the new user (real-time update)
+    io.emit("newUser", user); // This will emit 'newUser' event with the user data
   } catch (error) {
     console.error("Error saving user:", error);
     res.status(400).send(error);
@@ -73,5 +80,23 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT ||3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Socket.IO event: listening for connections from clients
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  // Example of receiving a message from the client
+  socket.on("message", (msg) => {
+    console.log("Received message:", msg);
+  });
+
+  // When a user disconnects
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+});
+
+// Start the server with Socket.IO
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

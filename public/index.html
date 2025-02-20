@@ -4,165 +4,314 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>User Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
-    <h2>User Registration</h2>
-    <form id="userForm">
-      <input type="text" id="firstName" placeholder="First Name" />
-      <span class="error" id="firstNameError"></span>
-
-      <input type="text" id="lastName" placeholder="Last Name" />
-      <span class="error" id="lastNameError"></span>
-
-      <input type="text" id="mobile" placeholder="Mobile No" />
-      <span class="error" id="mobileError"></span>
-
-      <input type="email" id="email" placeholder="Email" />
-      <span class="error" id="emailError"></span>
+    <form id="myForm">
+        <h2 class="text-center">User Registration</h2>
       
-
-      <input type="text" id="country" placeholder="Country" />
-      <span class="gap"></span>
-
-      <input type="text" id="state" placeholder="State" />
-      <span class="gap"></span>
-
-      <input type="text" id="city" placeholder="City" />
-      <span class="gap"></span>
-
-      <input type="text" id="street" placeholder="Street" />
-      <span class="gap"></span>
-
-      <input
-        type="text"
-        id="loginId"
-        placeholder="Login ID (8-12 characters)"
-      />
-      <span class="error" id="loginIdError"></span>
-
-      <input type="password" id="password" placeholder="Password" />
-      <span class="error" id="passwordError"></span>
-
-      <button type="submit">Save</button>
-      <button id="showDataButton">Show Users</button>
-    </form>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name:</label>
+          <input type="text" id="firstName" class="form-control" required>
+          <div class="error" id="firstNameError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name:</label>
+          <input type="text" id="lastName" class="form-control" required>
+          <div class="error" id="lastNameError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="mobileNo" class="form-label">Mobile No:</label>
+          <input type="text" id="mobileNo" class="form-control" required>
+          <div class="error" id="mobileError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="email" class="form-label">Email ID:</label>
+          <input type="email" id="email" class="form-control" required>
+          <div class="error" id="emailError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="street" class="form-label">Street:</label>
+          <input type="text" id="street" class="form-control" required>
+          <div class="error" id="streetError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="city" class="form-label">City:</label>
+          <input type="text" id="city" class="form-control" required>
+          <div class="error" id="cityError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="state" class="form-label">State:</label>
+          <input type="text" id="state" class="form-control" required>
+          <div class="error" id="stateError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="country" class="form-label">Country:</label>
+          <input type="text" id="country" class="form-control" required>
+          <div class="error" id="countryError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="loginId" class="form-label">Login ID:</label>
+          <input type="text" id="loginId" class="form-control" required>
+          <div class="error" id="loginIdError"></div>
+        </div>
+      
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" id="password" class="form-control" required>
+          <div class="error" id="passwordError"></div>
+        </div>
+      
+        <button type="submit" class="btn btn-primary" id="savebutton">Save</button>
+        
+        <!-- You can uncomment below if you want the View Users link -->
+        <!-- <a href="index1.html">View Users</a> -->
+        
+        <button type="button" class="btn btn-secondary" id="showDataButton">View Users</button>
+      </form>
+      
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("#userForm").submit(function (event) {
-                event.preventDefault();
-                $(".error").text(""); // Clear previous errors
-                let isValid = true;
+        // $(document).ready(function () {
+        //     $("#userForm").submit(function (event) {
+        //         event.preventDefault();
+        //         $(".error").text(""); // Clear previous errors
+        //         let isValid = true;
     
-                let firstName = $("#firstName").val().trim();
-                let lastName = $("#lastName").val().trim();
-                let mobile = $("#mobile").val().trim();
-                let email = $("#email").val().trim();
-                let loginId = $("#loginId").val().trim();
-                let password = $("#password").val().trim();
+        //         let firstName = $("#firstName").val().trim();
+        //         let lastName = $("#lastName").val().trim();
+        //         let mobile = $("#mobile").val().trim();
+        //         let email = $("#email").val().trim();
+        //         let loginId = $("#loginId").val().trim();
+        //         let password = $("#password").val().trim();
     
-                let country = $("#country").val().trim();
-                let state = $("#state").val().trim();
-                let city = $("#city").val().trim();
-                let street = $("#street").val().trim();
+        //         let country = $("#country").val().trim();
+        //         let state = $("#state").val().trim();
+        //         let city = $("#city").val().trim();
+        //         let street = $("#street").val().trim();
     
-                // First Name Validation
-                if (firstName === "") {
-                    $("#firstNameError").text("First Name is required!");
-                    isValid = false;
-                }
+        //         // First Name Validation
+        //         if (firstName === "") {
+        //             $("#firstNameError").text("First Name is required!");
+        //             isValid = false;
+        //         }
     
-                // Last Name Validation
-                if (lastName === "") {
-                    $("#lastNameError").text("Last Name is required!");
-                    isValid = false;
-                }
+        //         // Last Name Validation
+        //         if (lastName === "") {
+        //             $("#lastNameError").text("Last Name is required!");
+        //             isValid = false;
+        //         }
     
-                // Mobile Number Validation )
-                if (!/^\d{10}$/.test(mobile)) {
-                    $("#mobileError").text("Enter a valid 10-digit mobile number!");
-                    isValid = false;
-                }
+        //         // Mobile Number Validation )
+        //         if (!/^\d{10}$/.test(mobile)) {
+        //             $("#mobileError").text("Enter a valid 10-digit mobile number!");
+        //             isValid = false;
+        //         }
     
-                // Email Validation
-                if (!/^\S+@\S+\.\S+$/.test(email)) {
-                    $("#emailError").text("Enter a valid email address!");
-                    isValid = false;
-                }
+        //         // Email Validation
+        //         if (!/^\S+@\S+\.\S+$/.test(email)) {
+        //             $("#emailError").text("Enter a valid email address!");
+        //             isValid = false;
+        //         }
     
-                // Login ID Validation 
-                if (!/^\w{8,12}$/.test(loginId)) {
-                    $("#loginIdError").text("Login ID must be 8-12 characters long!");
-                    isValid = false;
-                }
+        //         // Login ID Validation 
+        //         if (!/^\w{8,12}$/.test(loginId)) {
+        //             $("#loginIdError").text("Login ID must be 8-12 characters long!");
+        //             isValid = false;
+        //         }
     
-                // Password Validation 
-                if (password.length < 6) {
-                    $("#passwordError").text("Password must be at least 6 characters!");
-                    isValid = false;
-                }
+        //         // Password Validation 
+        //         if (password.length < 6) {
+        //             $("#passwordError").text("Password must be at least 6 characters!");
+        //             isValid = false;
+        //         }
     
-                // Address Validation
-                if (street === "") {
-                    $("#streetError").text("Street is required!");
-                    isValid = false;
-                }
-                if (city === "") {
-                    $("#cityError").text("City is required!");
-                    isValid = false;
-                }
-                if (state === "") {
-                    $("#stateError").text("State is required!");
-                    isValid = false;
-                }
-                if (country === "") {
-                    $("#countryError").text("Country is required!");
-                    isValid = false;
-                }
+        //         // Address Validation
+        //         if (street === "") {
+        //             $("#streetError").text("Street is required!");
+        //             isValid = false;
+        //         }
+        //         if (city === "") {
+        //             $("#cityError").text("City is required!");
+        //             isValid = false;
+        //         }
+        //         if (state === "") {
+        //             $("#stateError").text("State is required!");
+        //             isValid = false;
+        //         }
+        //         if (country === "") {
+        //             $("#countryError").text("Country is required!");
+        //             isValid = false;
+        //         }
     
-                // If No Errors, Submit Data
-                if (isValid) {
-                    let userData = {
-                        firstName: firstName,
-                        lastName: lastName,
-                        mobile: mobile,
-                        email: email,
-                        address: {  
-                            street: street,
-                            city: city,
-                            state: state,
-                            country: country
-                        },
-                        loginId: loginId,
-                        password: password
-                    };
+        //         // If No Errors, Submit Data
+        //         if (isValid) {
+        //             let userData = {
+        //                 firstName: firstName,
+        //                 lastName: lastName,
+        //                 mobile: mobile,
+        //                 email: email,
+        //                 address: {  
+        //                     street: street,
+        //                     city: city,
+        //                     state: state,
+        //                     country: country
+        //                 },
+        //                 loginId: loginId,
+        //                 password: password
+        //             };
     
-                    console.log("Sending user data:", userData);  // Debugging
+        //             console.log("Sending user data:", userData);  // Debugging
                     
-                    $.ajax({
-                        type: "POST",
-                        url:"https://user-registertion.onrender.com/api/users",
-                        data: JSON.stringify(userData),
-                        contentType: "application/json",
-                        success: function () {
-                            alert("User data saved successfully!");
-                            $("#userForm")[0].reset();
-                            $(".error").text(""); // Clear errors after successful save
-                        },
-                        error: function (xhr) {
-                            console.error("Error:", xhr.responseText);
-                            alert("Data save Failed! Check console.");
-                        },
-                    });
-                }
-            });
+        //             $.ajax({
+        //                 type: "POST",
+        //                 url:"http://localhost:3000/api/users",
+        //                 data: JSON.stringify(userData),
+        //                 contentType: "application/json",
+        //                 success: function () {
+        //                     alert("User data saved successfully!");
+        //                     $("#userForm")[0].reset();
+        //                     $(".error").text(""); // Clear errors after successful save
+        //                 },
+        //                 error: function (xhr) {
+        //                     console.error("Error:", xhr.responseText);
+        //                     alert("Data save Failed!");
+        //                 },
+        //             });
+        //         }
+        //     });
     
-            $("#showDataButton").click(function () {
-                window.location.href = "display.html"; // Redirect to display.html
+        //     $("#showDataButton").click(function () {
+        //         window.location.href = "display.html"; // Redirect to display.html
+        //     });
+        // });
+        $(document).ready(function () {
+    // Make sure to use the correct form ID here: #myForm
+    $("#myForm").submit(function (event) {
+        event.preventDefault();  // Prevent the form from submitting normally
+        $(".error").text(""); // Clear previous errors
+        let isValid = true;
+
+        // Get form data values
+        let firstName = $("#firstName").val().trim();
+        let lastName = $("#lastName").val().trim();
+        let mobile = $("#mobileNo").val().trim();  // Fixed the mobile ID to match the HTML
+        let email = $("#email").val().trim();
+        let loginId = $("#loginId").val().trim();
+        let password = $("#password").val().trim();
+        let country = $("#country").val().trim();
+        let state = $("#state").val().trim();
+        let city = $("#city").val().trim();
+        let street = $("#street").val().trim();
+
+        // First Name Validation
+        if (firstName === "") {
+            $("#firstNameError").text("First Name is required!");
+            isValid = false;
+        }
+
+        // Last Name Validation
+        if (lastName === "") {
+            $("#lastNameError").text("Last Name is required!");
+            isValid = false;
+        }
+
+        // Mobile Number Validation
+        if (!/^\d{10}$/.test(mobile)) {
+            $("#mobileError").text("Enter a valid 10-digit mobile number!");
+            isValid = false;
+        }
+
+        // Email Validation
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            $("#emailError").text("Enter a valid email address!");
+            isValid = false;
+        }
+
+        // Login ID Validation
+        if (!/^\w{8,12}$/.test(loginId)) {
+            $("#loginIdError").text("Login ID must be 8-12 characters long!");
+            isValid = false;
+        }
+
+        // Password Validation
+        if (password.length < 6) {
+            $("#passwordError").text("Password must be at least 6 characters!");
+            isValid = false;
+        }
+
+        // Address Validation
+        if (street === "") {
+            $("#streetError").text("Street is required!");
+            isValid = false;
+        }
+        if (city === "") {
+            $("#cityError").text("City is required!");
+            isValid = false;
+        }
+        if (state === "") {
+            $("#stateError").text("State is required!");
+            isValid = false;
+        }
+        if (country === "") {
+            $("#countryError").text("Country is required!");
+            isValid = false;
+        }
+
+        // If no errors, submit data
+        if (isValid) {
+            let userData = {
+                firstName: firstName,
+                lastName: lastName,
+                mobile: mobile,
+                email: email,
+                address: {  
+                    street: street,
+                    city: city,
+                    state: state,
+                    country: country
+                },
+                loginId: loginId,
+                password: password
+            };
+
+            console.log("Sending user data:", userData);  // Debugging
+
+            // Send the data using Ajax
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:3000/api/users",
+                data: JSON.stringify(userData),
+                contentType: "application/json",
+                success: function () {
+                    alert("User data saved successfully!");
+                    $("#myForm")[0].reset();  // Reset form after success
+                    $(".error").text("");  // Clear error messages
+                },
+                error: function (xhr) {
+                    console.error("Error:", xhr.responseText);
+                    alert("Data save failed! Check console.");
+                },
             });
-        });
+        }
+    });
+
+    // Handle 'View Users' button click
+    $("#showDataButton").click(function () {
+        window.location.href = "display.html";  // Redirect to the display page
+    });
+});
+
     </script>
     
     
