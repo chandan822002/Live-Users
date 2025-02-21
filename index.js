@@ -4,6 +4,11 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const http = require("http"); // Import HTTP module to integrate with socket.io
 const socketIo = require("socket.io"); // Import socket.io
+const corsOptions = {
+  origin: 'https://cks-ih15.onrender.com',  // Replace with your frontend URL
+  methods: 'GET, POST', // Allow specific methods
+  allowedHeaders: 'Content-Type, Authorization',  // Allow specific headers
+};
 
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
