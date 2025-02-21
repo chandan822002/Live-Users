@@ -9,12 +9,14 @@ const app = express();
 const server = http.createServer(app); // Create an HTTP server
 const io = socketIo(server); // Pass the server to socket.io
 const corsOptions = {
-  origin: 'https://cks-ih15.onrender.com',  // Replace with your frontend URL
-  methods: 'GET, POST', // Allow specific methods
-  allowedHeaders: 'Content-Type, Authorization',  // Allow specific headers
+  origin: 'https://cks-ih15.onrender.com',  // Your frontend URL
+  methods: 'GET, POST', // Allow GET and POST requests
+  allowedHeaders: 'Content-Type, Authorization',  // Allowed headers
 };
 
+// Apply the CORS configuration to the express app
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Allow pre-flight requests
 
 
 app.use(cors());
