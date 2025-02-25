@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body> 
+   
+    <div class="container">
+     
+        <h1 class="text-center mt-5">User Login</h1>
+      <form id="loginForm" class="mt-4">
+        <div class="mb-3">
+          <label for="loginId" class="form-label">Login ID:</label>
+          <input type="text" id="loginId" class="form-control" required>
+          <div class="error" id="loginIdError"></div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" id="password" class="form-control" required>
+          <div class="error" id="passwordError"></div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="loginButton">Login</button>
+        
+        <div class="mt-3">
+          <a href="register.html">Don't have an account? Register here</a>
+        </div>
+      </form>
+    </div>
+    
+    <script>
+     $(document).ready(function () {
+  $("#loginForm").submit(function (event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+    $(".error").text("");  // Clear previous error messages
+    let isValid = true;
+
+    // Get form data values
+    let loginId = $("#loginId").val().trim();
+    let password = $("#password").val().trim();
+
+    console.log("Login ID:", loginId); // Debugging the Login ID
+
+    // Login ID Validation (allow alphanumeric + underscores, between 8 and 12 characters)
+    if (!/^\w{8,12}$/.test(loginId)) {
+      $("#loginIdError").text("Login ID must be 8-12 characters long and can contain only letters, numbers, and underscores.");
+      isValid = false;
+    }
+
+    // Password Validation
+    if (password.length < 6) {
+      $("#passwordError").text("Password must be at least 6 characters!");
+      isValid = false;
+    }
+
+    // If no errors, submit data
+    if (isValid) {
+      let loginData = {
+        loginId: loginId,
+        password: password
+      };
+
+      console.log("Sending login data:", loginData);  // Debugging
+
+      // Send the data using Ajax
+      $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/api/login",  // Make sure this matches the server endpoint
+        data: JSON.stringify(loginData),
+        contentType: "application/json",
+        success: function (response) {
+          alert("Login successful!");
+          window.location.href = "dashboard.html";  // Redirect to dashboard after successful login
+        },
+        error: function (xhr) {
+          console.error("Error:", xhr.responseText);
+          alert("Login failed! Check console for more details.");
+        },
+      });
+    }
+  });
+});
+
+    </script>
+    
+  </body>
+</html>

@@ -99,6 +99,9 @@ td {
     margin-top: -10px;
     display: block;
 }
+a{
+    text-decoration: none;
+}
 
 
 /* Responsive Design */

@@ -4,15 +4,23 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const http = require("http"); // Import HTTP module to integrate with socket.io
 const socketIo = require("socket.io"); // Import socket.io
-
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
 const io = socketIo(server); // Pass the server to socket.io
+// const corsOptions = {
+//   origin: 'http://localhost:3000',  // Your frontend URL
+//   methods: 'GET, POST', // Allow GET and POST requests
+//   allowedHeaders: 'Content-Type, Authorization',  // Allowed headers
+// };
 const corsOptions = {
-  origin: 'https://cks-ih15.onrender.com',  // Your frontend URL
-  methods: 'GET, POST', // Allow GET and POST requests
-  allowedHeaders: 'Content-Type, Authorization',  // Allowed headers
+  origin: ['http://localhost:3000', 'http://127.0.0.1:5500'],  // Allow both URLs
+  methods: 'GET, POST',
+  allowedHeaders: 'Content-Type, Authorization',
 };
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));  // Allow pre-flight requests
+
 
 // Apply the CORS configuration to the express app
 app.use(cors(corsOptions));
@@ -25,7 +33,7 @@ app.use(bodyParser.json());
 // MongoDB Connection
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://chandankumarsingh1345:s1PQVeKlPusi1kaf@cluster0user.0z5dq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0User")
+mongoose.connect("mongodb://localhost:27017/test")
     .then(() => console.log("MongoDB Connected Successfully"))
     .catch((err) => console.error("MongoDB Connection Error:", err));
 
@@ -62,7 +70,7 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
-// API to Save User Data
+//API to Save User Data
 app.post("/api/users", async (req, res) => {
   console.log("Received Data:", req.body); // Debugging
 
@@ -78,6 +86,35 @@ app.post("/api/users", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
+
+
+
+app.post("/api/login", async (req, res) => {
+  console.log("Login data received:", req.body);
+  const { loginId, password } = req.body;
+
+  try {
+    // You might want to hash passwords, but for now assuming plain text for simplicity
+    const user = await User.findOne({ loginId, password });
+    
+    if (!user) {
+      return res.status(400).send("Invalid login credentials");
+    }
+    // Successful login logic here
+    res.status(200).send({ message: "Login successful!" });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).send({ error: "Failed to process login" });
+  }
+});
+
+
+
+
+
+
+
 
 // API to Get All Users
 app.get("/api/users", async (req, res) => {
@@ -106,7 +143,7 @@ io.on("connection", (socket) => {
 });
 
 // Start the server with Socket.IO
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
