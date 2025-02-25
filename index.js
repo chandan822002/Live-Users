@@ -13,7 +13,7 @@ const io = socketIo(server); // Pass the server to socket.io
 //   allowedHeaders: 'Content-Type, Authorization',  // Allowed headers
 // };
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://127.0.0.1:5500'],  // Allow both URLs
+  origin: ['https://live-users-1-3287.onrender.com', 'http://127.0.0.1:5500'],  // Allow both URLs
   methods: 'GET, POST',
   allowedHeaders: 'Content-Type, Authorization',
 };
