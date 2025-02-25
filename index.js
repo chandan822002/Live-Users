@@ -33,7 +33,8 @@ app.use(bodyParser.json());
 // MongoDB Connection
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/test")
+// mongoose.connect("mongodb://localhost:27017/test")
+mongoose.connect("mongodb+srv://chandankumarsingh1345:IPsResY0VQMkwmCV@cluster0live-users.ovd0z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0Live-Users")
     .then(() => console.log("MongoDB Connected Successfully"))
     .catch((err) => console.error("MongoDB Connection Error:", err));
 
